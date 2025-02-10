@@ -58,11 +58,13 @@ export default function PaymentInput({
 					)}
 				</span>
 			</label>
-			{!isValidInput && (
-				<span className="font-thin text-red-600 block mt-1 text-xs text-right pr-1">
+			<p className="font-thin text-red-600 block text-xs relative transition-all duration-500">
+				<span
+					className={`absolute -top-2 z-10	${isValidInput ? `hidden` : "block"}`}
+				>
 					{errorMessage}
 				</span>
-			)}
+			</p>
 		</div>
 	);
 }

@@ -121,11 +121,13 @@ export default function AddPayment() {
 	};
 	console.log(formData);
 	return (
-		<section className="m-auto bg-slate-200 h-[680px] w-[350px] sm:h-[700px] sm:w-[600px] rounded-md">
-			<button className="border-none">X</button>
+		<section className="m-auto bg-slate-200 h-[700px] w-[350px] sm:h-[700px] sm:w-[600px] rounded-md relative">
+			<button className="border-none absolute right-1 top-1 bg-white rounded-xl py-1 px-2">
+				X
+			</button>
 			<form
 				id="addPaymentForm"
-				className="w-full h-full flex flex-col justify-center -mt-6 items-center gap-5"
+				className="w-full h-full flex flex-col justify-center items-center gap-2"
 				action=""
 			>
 				{/* Cantidad */}
@@ -134,6 +136,14 @@ export default function AddPayment() {
 					errorMessage={error.quantity}
 					isValidInput={validInput.quantity}
 					value={formData.quantity}
+					// value={
+					// 	formData.quantity
+					// 		? new Intl.NumberFormat("es-Mx", {
+					// 				style: "currency",
+					// 				currency: "MXN",
+					// 		  }).format(formData.quantity)
+					// 		: ""
+					// }
 					onblur={(event) => handleBlur("quantity", event.target.value)}
 					onchange={(event) => handleChange("quantity", event.target.value)}
 					title="Cantidad"
@@ -164,7 +174,7 @@ export default function AddPayment() {
 					icon={faCalendar}
 					inputType="date"
 				/>
-				<div className="flex w-full gap-10 sm:gap-32 justify-center">
+				<div className="flex w-full gap-10 sm:gap-32 justify-center mt-2">
 					{cardSelectionOptionsArray.map(({ icon, title, type }: Options) => (
 						<CardSelector
 							key={type}
@@ -177,6 +187,9 @@ export default function AddPayment() {
 				</div>
 				{/* Cambiar a drag and drop*/}
 				<FileDrop handleDrop={handleFileDrop} />
+				<button className="px-2 py-1 border-none shadow-sm bg-slate-300 hover:cursor-pointer hover:bg-slate-400 rounded-md mb-1 ">
+					Guardar
+				</button>
 			</form>
 		</section>
 	);
