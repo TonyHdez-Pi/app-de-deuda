@@ -15,7 +15,7 @@ export function useValidations() {
 		if (!nameRegex.test(name)) {
 			return {
 				isValid: false,
-				errorMessage: "El nombre debe contener al menos 3 letras",
+				errorMessage: "Escribe al menos 3 caracteres",
 			};
 		} else {
 			return { isValid: true, errorMessage: "" };
@@ -59,12 +59,13 @@ export function useValidations() {
 
 	function dateValidation(date: Date): ValidationFunction {
 		const todaysDate = new Date();
+		const dateToValidate = new Date(date);
 		// se puede hacer este tipo de comparacion pues new Date calcula el tiempo en milisegundos desde
 		// 1970! :o
-		if (todaysDate <= date) {
+		if (dateToValidate > todaysDate) {
 			return {
 				isValid: false,
-				errorMessage: "La fecha tiene que ser menor o igual a la de hoy",
+				errorMessage: "La fecha no puede ser mayor a la de hoy",
 			};
 		} else {
 			return {
