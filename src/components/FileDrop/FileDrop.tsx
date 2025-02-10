@@ -1,5 +1,3 @@
-import { faImage } from "@fortawesome/free-regular-svg-icons";
-import { FontAwesomeIcon } from "@fortawesome/react-fontawesome";
 import { ChangeEvent, DragEvent, useState } from "react";
 
 type FileDropProps = {
@@ -9,9 +7,11 @@ type FileDropProps = {
 export default function FileDrop({ handleDrop }: FileDropProps) {
 	const onHandleDrop = (event: DragEvent<HTMLElement>) => {
 		event.preventDefault();
-		console.log(event);
-		handleDrop(event.dataTransfer.files[0]);
-		setFile(event.dataTransfer.files[0]);
+		// checa si el archivo es mayor a 2mb
+		if (!(event.dataTransfer.files[0].size / (1024 * 1024) > 2)) {
+			handleDrop(event.dataTransfer.files[0]);
+			setFile(event.dataTransfer.files[0]);
+		}
 	};
 
 	const onChangeEvent = (event: ChangeEvent<HTMLInputElement>) => {
@@ -32,13 +32,20 @@ export default function FileDrop({ handleDrop }: FileDropProps) {
 			onDragOver={(event) => event.preventDefault()}
 			id="dropZone"
 			onDrop={onHandleDrop}
-			className="w-3/4 h-[150px] sm:h-[180px] border-dashed bg-slate-300 rounded-md flex flex-col justify-center items-center"
+			className="w-3/4 h-[150px] sm:h-[180px] border-dashed bg-slate-300 rounded-md flex flex-col justify-center items-center gap-3"
 		>
 			{file ? (
-				<p>{file.name}</p>
+				<section className="flex flex-row-reverse gap-3">
+					<button
+						onClick={() => setFile(undefined)}
+						className="border-none bg-transparent cursor-pointer"
+					>
+						X
+					</button>
+					<p>{file.name}</p>
+				</section>
 			) : (
 				<>
-					<FontAwesomeIcon icon={faImage} size="3x" />
 					<label
 						className="rounded-md text-sm bg-slate-400 font-semibold py-3 px-2 hover:cursor-pointer"
 						htmlFor="files"
